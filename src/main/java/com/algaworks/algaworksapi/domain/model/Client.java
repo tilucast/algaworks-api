@@ -16,7 +16,7 @@ public class Client {
 	@NonNull
 	private String name;
 	@NonNull
-	private String phone;
+	private String telephone;
 	@NonNull
 	private String email;
 	

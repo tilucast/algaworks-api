@@ -20,7 +20,7 @@ public class ClientController {
 	@GetMapping("/clients")
 	public List<Client> getClients() {
 		
-		var client = new Client("A", "B", "benis@benis.com");
+		var client = new Client("Benis", "B", "benis@benis.com");
 		var client2 = new Client("C", "D", "quenis@penico.com");
 		
 		return Arrays.asList(client, client2);
