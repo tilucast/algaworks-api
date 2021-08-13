@@ -15,12 +15,14 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
 @NoArgsConstructor
+@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
@@ -45,7 +47,6 @@ public class Client {
 	@NonNull
 	@NotBlank
 	@Email
-	@Size(max = 255)
 	private String email;
 	
 }

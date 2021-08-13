@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -30,8 +31,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		ex.getBindingResult().getAllErrors().forEach(error -> {
 			String name =  ((FieldError) error).getField();
-			//String message = error.getDefaultMessage();
-			String message = msgSource.getMessage(error, LocaleContextHolder.getLocale());
+			String message = error.getDefaultMessage();
+			//String message = msgSource.getMessage(error, LocaleContextHolder.getLocale());
 			
 			fields.add(new ErrorException.Field(name, message));
 		});
@@ -39,6 +40,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var errorException = new ErrorException(status.value(), LocalDateTime.now(), "One or more fields are invalid.", fields);
 		
 		return handleExceptionInternal(ex, errorException, headers, status, request);
+	}
+	
+	@ExceptionHandler(ValidationRulesException.class)
+	public ResponseEntity<Object> handleValidationRules(ValidationRulesException exception, WebRequest request){
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		
+		return handleExceptionInternal(exception, new ErrorException(status.value(), LocalDateTime.now(), exception.getMessage()), new HttpHeaders(), status, request);
 	}
 	
 }
