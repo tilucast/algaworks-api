@@ -2,6 +2,8 @@ package com.algaworks.algaworksapi.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,12 +59,12 @@ public class ClientController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Client create(@RequestBody Client client) {
+	public Client create(@Valid @RequestBody Client client) {
 		return clientRepository.save(client);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Client> update(@PathVariable Long id, @RequestBody Client client) {
+	public ResponseEntity<Client> update(@PathVariable Long id, @Valid @RequestBody Client client) {
 		
 		if(!clientRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
