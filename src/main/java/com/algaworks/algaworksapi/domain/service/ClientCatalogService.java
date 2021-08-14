@@ -16,6 +16,12 @@ public class ClientCatalogService {
 	private ClientRepository clientRepository;
 	
 	@Transactional
+	public Client get(Long id) {
+		return clientRepository.findById(id)
+				.orElseThrow(() -> new ValidationRulesException("Client informed does not exists."));
+	}
+	
+	@Transactional
 	public Client save(Client client) {
 		boolean emailRegistered = clientRepository.findByEmail(client.getEmail())
 				.stream()
